@@ -1,0 +1,52 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="ErrorTracker.master.cs" Inherits="ErrorTracker" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title> <%=PageTitle%></title>
+    <link href="Style.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="ET_Wrap">
+        <div class="ET_HeaderWrap">
+            <ul>
+                <li class="ET_ErrorTracketLogo">
+                    <img src="Images/logo.jpg" alt="Micajah" />
+                </li>
+                <li class="ET_ErrorTracketTitle"><%=ErrorTracketTitle%>
+                </li>
+            </ul>
+        </div>
+        <div class="ET_MenuWrap">
+            <ul>
+                <li ID="liBack" runat="server" visible="false"><asp:HyperLink ID="hlBack" runat="server" Text="Back"></asp:HyperLink>
+                </li>
+                <li ID="liSeparator" runat="server" visible="false" class="ET_MenuSeparator">|
+                </li>
+                <li ID="liApplications" runat="server" visible="false"><asp:HyperLink ID="hlApplications" runat="server" Text="Applications"  NavigateUrl="Default.aspx"></asp:HyperLink>
+                </li>
+                <li ID="liSeparator2" runat="server" visible="false" class="ET_MenuSeparator">|
+                </li>
+                <li class="ET_SubMenu" ID="liAppErrors" runat="server" visible="false">Application Errors :
+                    <asp:HyperLink ID="hlBySourceFiles" runat="server" Text="by Source Files"></asp:HyperLink>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <asp:HyperLink ID="hlByErrorTypes" runat="server" Text="by Error Types"></asp:HyperLink>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;
+                    <asp:HyperLink ID="hlByTime" runat="server" Text="by Time"></asp:HyperLink>
+                </li>
+                <li><asp:HyperLink ID="hlAdminPanel" runat="server" Text="Admin Panel" NavigateUrl="AdminPanel.aspx"></asp:HyperLink></li>
+            </ul>
+        </div>
+        <div class="ET_Main">
+            <div class="ET_Content">
+            <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+            </asp:ContentPlaceHolder>
+            </div>
+        </div>
+        <div class="ET_FooterWrapper"><span>Copyright © <%=CurrYear%> Micajah IT Services, Inc. All rights reserved. | Engineered by <a href="www.micajah.com">Micajah</a>. </span>
+        </div>
+    </div>
+    </form>
+</body>
+</html>

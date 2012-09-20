@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="DesktopBuild" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <!-- TO EDIT BUILD TYPE DEFINITION
+
+  To edit the build type, you will need to edit this file which was generated
+  by the Create New Build Type wizard.  This file is under source control and
+  needs to be checked out before making any changes.
+
+  The file is available at -
+      $/{TeamProjectName}/TeamBuildTypes/{BuildTypeName}
+  where you will need to replace TeamProjectName and BuildTypeName with your
+  Team Project and Build Type name that you created
+
+  Checkout the file
+    1. Open Source Control Explorer by selecting View -> Other Windows -> Source Control Explorer
+    2. Ensure that your current workspace has a mapping for the $/{TeamProjectName}/TeamBuildTypes folder and 
+       that you have done a "Get Latest Version" on that folder
+    3. Browse through the folders to {TeamProjectName}->TeamBuildTypes->{BuildTypeName} folder
+    4. From the list of files available in this folder, right click on TfsBuild.Proj. Select 'Check Out For Edit...'
+
+
+  Make the required changes to the file and save
+
+  Checkin the file
+    1. Right click on the TfsBuild.Proj file selected in Step 3 above and select 'Checkin Pending Changes'
+    2. Use the pending checkin dialog to save your changes to the source control
+
+  Once the file is checked in with the modifications, all future builds using
+  this build type will use the modified settings
+  -->
+  <!-- Do not edit this -->
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\TeamBuild\Microsoft.TeamFoundation.Build.targets" />  
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\AssemblyInfoTask\Microsoft.VersionNumber.Targets" />
+  
+  <ProjectExtensions>
+    <!--  DESCRIPTION
+     The description is associated with a build type. Edit the value for making changes.
+    -->
+    <Description>Build Micajah.ErrorTracker project.</Description>
+    <!--  BUILD MACHINE
+     Name of the machine which will be used to build the solutions selected.
+    -->
+    <BuildMachine>CARVER</BuildMachine>
+  </ProjectExtensions>
+  <PropertyGroup>
+    <!--  TEAM PROJECT
+     The team project which will be built using this build type.
+    -->
+    <TeamProject>Micajah.ErrorTracker</TeamProject>
+    <!--  BUILD DIRECTORY
+     The directory on the build machine that will be used to build the
+     selected solutions. The directory must be a local path on the build
+     machine (e.g. c:\build).
+    -->
+    <BuildDirectoryPath>C:\BuildDirectory</BuildDirectoryPath>
+    <!--  DROP LOCATION
+      The location to drop (copy) the built binaries and the log files after
+     the build is complete. This location has to be a valid UNC path of the
+     form \\Server\Share. The build machine service account and application
+     tier account need to have read write permission on this share.
+    -->
+    <!--<DropLocation>\\KHAN\DropDirectory\Micajah.ErrorTracker</DropLocation>-->
+    <DropLocation>\\CARVER\BuildTemp\Micajah.ErrorTracker</DropLocation>
+    <!--  TESTING 
+     Set this flag to enable/disable running tests as a post build step.
+    -->
+    <RunTest>false</RunTest>
+    <!--  WorkItemFieldValues
+      Add/edit key value pairs to set values for fields in the work item created
+      during the build process. Please make sure the field names are valid 
+      for the work item type being used.
+    -->
+    <WorkItemFieldValues>Symptom=build break;Steps To Reproduce=Start the build using Team Build</WorkItemFieldValues>
+    <!--  CODE ANALYSIS
+       To change CodeAnalysis behavior edit this value. Valid values for this
+       can be Default,Always or Never.
+
+     Default - To perform code analysis as per the individual project settings
+     Always  - To always perform code analysis irrespective of project settings
+     Never   - To never perform code analysis irrespective of project settings
+     -->
+    <RunCodeAnalysis>Never</RunCodeAnalysis>
+    <!--  UPDATE ASSOCIATED WORK ITEMS
+     Set this flag to enable/disable updating associated workitems on a successful build
+    -->
+    <UpdateAssociatedWorkItems>true</UpdateAssociatedWorkItems>
+    <!-- Title for the work item created on build failure -->
+    <WorkItemTitle>Build failure in build:</WorkItemTitle>
+    <!-- Description for the work item created on build failure -->
+    <DescriptionText>This work item was created by Team Build on a build failure.</DescriptionText>
+    <!-- Text pointing to log file location on build failure -->
+    <BuildlogText>The build log file is at:</BuildlogText>
+    <!-- Text pointing to error/warnings file location on build failure -->
+    <ErrorWarningLogText>The errors/warnings log file is at:</ErrorWarningLogText>
+  </PropertyGroup>    
+  <UsingTask AssemblyFile="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Zip" />
+  <UsingTask AssemblyFile="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.dll" TaskName="MSBuild.Community.Tasks.Version" />
+  <PropertyGroup>
+    <!-- Assembly version properties. Add others here -->
+    <!--    <AssemblyMajorVersion>2</AssemblyMajorVersion>
+    <AssemblyFileMajorVersion>2</AssemblyFileMajorVersion>
+    -->
+
+    <!-- TF.exe -->
+    <TF>"$(TeamBuildRefPath)\..\tf.exe"</TF>
+
+    <!-- AssemblyInfo file spec -->
+    <AssemblyInfoSpec>AssemblyInfo.cs</AssemblyInfoSpec>
+  </PropertyGroup>
+
+  <!-- Set this to non-existent file to force rebuild. -->
+  <ItemGroup>
+    <IntermediateAssembly Include="$(SolutionRoot)\foobar.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--  SOLUTIONS
+     The path of the solutions to build. To add/delete solutions, edit this
+     value. For example, to add a solution MySolution.sln, add following line -
+         <SolutionToBuild Include="$(SolutionRoot)\path\MySolution.sln" />
+
+     To change the order in which the solutions are build, modify the order in
+     which the solutions appear below.
+    -->
+    <SolutionToBuild Include="$(SolutionRoot)\Micajah.ErrorTracker.sln" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--  CONFIGURATIONS
+     The list of configurations to build. To add/delete configurations, edit
+     this value. For example, to add a new configuration, add following lines -
+         <ConfigurationToBuild Include="Debug|x86">
+             <FlavorToBuild>Debug</FlavorToBuild>
+             <PlatformToBuild>x86</PlatformToBuild>
+         </ConfigurationToBuild>
+
+     The Include attribute value should be unique for each ConfigurationToBuild node.
+    -->
+    <ConfigurationToBuild Include="Debug|Any CPU">
+      <FlavorToBuild>Debug</FlavorToBuild>
+      <PlatformToBuild>Any CPU</PlatformToBuild>
+    </ConfigurationToBuild>
+    <ConfigurationToBuild Include="Release|Any CPU">
+      <FlavorToBuild>Release</FlavorToBuild>
+      <PlatformToBuild>Any CPU</PlatformToBuild>
+    </ConfigurationToBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <!--  TEST ARGUMENTS
+     If the RunTest is set to true then the following test arguments will be
+     used to run tests.
+
+     To add/delete new testlist or to choose a metadata file (.vsmdi) file, edit this value.
+     For e.g. to run BVT1 and BVT2 type tests mentioned in the Helloworld.vsmdi file, add the following -
+
+     <MetaDataFile Include="$(SolutionRoot)\HelloWorld\HelloWorld.vsmdi">
+         <TestList>BVT1;BVT2</TestList>
+     </MetaDataFile>
+
+     Where BVT1 and BVT2 are valid test types defined in the HelloWorld.vsmdi file.
+     MetaDataFile - Full path to test metadata file.
+     TestList - The test list in the selected metadata file to run.
+
+     Please note that you need to specify the vsmdi file relative to $(SolutionRoot)
+    -->
+    <MetaDataFile Include=" ">
+      <TestList> </TestList>
+    </MetaDataFile>
+  </ItemGroup>
+  <ItemGroup>
+    <!--  ADDITIONAL REFERENCE PATH
+     The list of additional reference paths to use while resolving references.
+     For example,
+         <AdditionalReferencePath Include="C:\MyFolder\" />
+         <AdditionalReferencePath Include="C:\MyFolder2\" />
+    -->    
+  </ItemGroup>
+
+  <Target Name="BuildNumberOverrideTarget">
+    <Version RevisionType="Increment" VersionFile="C:\BuildNumbers\Micajah.ErrorTracker\simple_manual_build.number">
+      <Output PropertyName="AssemblyMajorVersion" TaskParameter="Major" />
+      <Output PropertyName="AssemblyMinorVersion" TaskParameter="Minor" />
+      <Output PropertyName="AssemblyBuildNumber" TaskParameter="Build" />
+      <Output PropertyName="AssemblyRevision" TaskParameter="Revision" />
+    </Version>
+    <CreateProperty Value="$(AssemblyMajorVersion).$(AssemblyMinorVersion).$(AssemblyBuildNumber).$(AssemblyRevision)">
+      <Output TaskParameter="Value" PropertyName="BuildNumber" />
+    </CreateProperty>
+    <CreateProperty Value="$(AssemblyMajorVersion)">
+      <Output TaskParameter="Value" PropertyName="AssemblyFileMajorVersion" />
+    </CreateProperty>
+    <CreateProperty Value="$(AssemblyMinorVersion)">
+      <Output TaskParameter="Value" PropertyName="AssemblyFileMinorVersion" />
+    </CreateProperty>
+    <CreateProperty Value="$(AssemblyMajorVersion)">
+      <Output TaskParameter="Value" PropertyName="AssemblyFileMajorVersion" />
+    </CreateProperty>
+    <CreateProperty Value="$(AssemblyBuildNumber)">
+      <Output TaskParameter="Value" PropertyName="AssemblyFileBuildNumber" />
+    </CreateProperty>
+    <CreateProperty Value="$(AssemblyRevision)">
+      <Output TaskParameter="Value" PropertyName="AssemblyFileRevision" />
+    </CreateProperty>
+    <CreateProperty Value="NoIncrement">
+      <Output TaskParameter="Value" PropertyName="AssemblyFileRevisionType" />
+    </CreateProperty>
+    <CreateProperty Value="NoIncrement">
+      <Output TaskParameter="Value" PropertyName="AssemblyBuildNumberType" />
+    </CreateProperty>
+    <CreateProperty Value="NoIncrement">
+      <Output TaskParameter="Value" PropertyName="AssemblyFileBuildNumberType" />
+    </CreateProperty>
+    <CreateProperty Value="NoIncrement">
+      <Output TaskParameter="Value" PropertyName="AssemblyRevisionType" />
+    </CreateProperty>
+  </Target>
+  
+  <Target Name="AfterGet" Condition="'$(IsDesktopBuild)'!='true'">
+    <!-- Set the AssemblyInfoFiles items dynamically  -->
+    <CreateItem Include="$(SolutionRoot)\**\$(AssemblyInfoSpec)">
+      <Output ItemName="AssemblyInfoFiles" TaskParameter="Include" />
+    </CreateItem>    
+    <Exec WorkingDirectory="$(SolutionRoot)" Command="$(TF) checkout /recursive $(AssemblyInfoSpec)" />    
+  </Target>  
+
+
+  <Target Name="AfterCompile" Condition="'$(IsDesktopBuild)'!='true'">
+    <!-- Compile site -->
+    <Exec Command="aspnet_compiler.exe -v /ErrorTrackerUI -p &quot;C:\BuildDirectory\Micajah.ErrorTracker\Simple Manual Build\Sources\web.Micajah.ErrorTracker&quot; -u -f &quot;C:\BuildDirectory\Micajah.ErrorTracker\Simple Manual Build\Binaries\ErrorTrackerUI\\&quot;" WorkingDirectory="C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727" />
+    <!-- Delete bin -->    
+    <CreateItem Include="\\Largo\websites\mits_errortracker_beta\bin\**\*.*">
+      <Output ItemName="DeleteFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Delete Files="@(DeleteFiles)" ContinueOnError="true" />        
+    <!-- Deploy site -->
+    <CreateItem Include="$(BuildDirectoryPath)\$(TeamProject)\Simple Manual Build\Binaries\ErrorTrackerUI\**\*.config">
+      <Output ItemName="NotCopyConfig" TaskParameter="Include" />
+    </CreateItem>
+    <CreateItem Include="$(BuildDirectoryPath)\$(TeamProject)\Simple Manual Build\Binaries\ErrorTrackerUI\bin\*.*" Exclude="@(NotCopyConfig)">
+      <Output ItemName="DeployBinFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Copy SourceFiles="@(DeployBinFiles)" DestinationFolder="\\Largo\websites\mits_errortracker_beta\bin" />
+    <CreateItem Include="$(BuildDirectoryPath)\$(TeamProject)\Simple Manual Build\Binaries\ErrorTrackerUI\Images\*.*" Exclude="@(NotCopyConfig)">
+      <Output ItemName="DeployImageFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Copy SourceFiles="@(DeployImageFiles)" DestinationFolder="\\Largo\websites\mits_errortracker_beta\Images" />
+    <CreateItem Include="$(BuildDirectoryPath)\$(TeamProject)\Simple Manual Build\Binaries\ErrorTrackerUI\*.*" Exclude="@(NotCopyConfig)">
+      <Output ItemName="DeployFiles" TaskParameter="Include" />
+    </CreateItem>
+    <Copy SourceFiles="@(DeployFiles)" DestinationFolder="\\Largo\websites\mits_errortracker_beta" />
+    <Message Importance="high" Text="@(DeployFiles)" />
+    <!-- Zip sources -->    
+    <CreateItem Include="$(BuildDirectoryPath)\$(TeamProject)\Simple Manual Build\Sources\**\*.*">
+      <Output ItemName="SourceFiles" TaskParameter="Include" />
+    </CreateItem>
+    <MakeDir Directories="C:\BuildStore\Micajah.ErrorTracker\$(BuildNumber)" />    
+    <Zip Files="@(SourceFiles)" ZipFileName="C:\BuildStore\Micajah.ErrorTracker\$(BuildNumber)\sources_$(BuildNumber).zip" WorkingDirectory="C:\BuildDirectory\Micajah.ErrorTracker\Simple Manual Build\" />    
+    <!-- Zip binaries -->    
+    <CreateItem Include="$(BuildDirectoryPath)\$(TeamProject)\Simple Manual Build\Binaries\**\*.*" Exclude="@(NotCopyConfig)">
+      <Output ItemName="BinaryFiles" TaskParameter="Include" />
+    </CreateItem>
+    <MakeDir Directories="C:\BuildStore\Micajah.ErrorTracker\$(BuildNumber)" />
+    <Zip Files="@(BinaryFiles)" ZipFileName="C:\BuildStore\Micajah.ErrorTracker\$(BuildNumber)\website_$(BuildNumber).zip" WorkingDirectory="C:\BuildDirectory\Micajah.ErrorTracker\Simple Manual Build\" />
+
+    <Exec WorkingDirectory="$(SolutionRoot)" Command="$(TF) checkin /comment:&quot;Auto-Build: Version Update&quot; /noprompt /override:&quot;Auto-Build: Version Update&quot; /recursive $(AssemblyInfoSpec)" />
+  </Target>
+
+  <!-- Skipping copying binaries to drop location -->
+  <Target Name="CoreDropBuild" />
+  
+  <!-- In case of Build failure, the AfterCompile target is not executed. Undo the changes -->
+  <Target Name="BeforeOnBuildBreak" Condition="'$(IsDesktopBuild)'!='true'">
+    <Exec WorkingDirectory="$(SolutionRoot)" Command="$(TF) undo /noprompt /recursive $(AssemblyInfoSpec)" />
+  </Target>
+
+</Project>
