@@ -36,6 +36,7 @@ using System.Web;
 		public string RequestHeader;
 		public string ServerVariables;
 		public decimal CacheSize;
+        public string CacheItemsInfo;
 
 		public ErrorInfo()
 		{ }

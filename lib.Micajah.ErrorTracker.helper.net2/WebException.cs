@@ -857,12 +857,17 @@ namespace Micajah.ErrorTrackerHelper2
 
 		#region GetCache
 
-		public static decimal GetCacheSize()
+        public static decimal GetCacheSize(ref string cacheItemsInfo)
 		{
             IDictionaryEnumerator cacheEnum = System.Web.HttpContext.Current.Cache.GetEnumerator();
             Type[] altSerializationType = { typeof(String), typeof(Int32), typeof(Boolean), typeof(DateTime), typeof(Decimal), typeof(Byte), typeof(Char), typeof(Single), typeof(Double), typeof(Int16), typeof(Int64),
                                                 typeof(UInt16), typeof(UInt32), typeof(UInt64), typeof(SByte), typeof(TimeSpan), typeof(Guid), typeof(IntPtr), typeof(UIntPtr)};
             decimal cacheTotal = 0;
+            StringBuilder oSB = new StringBuilder();
+            AppendTableHeader(oSB);
+            oSB.Append("<tr>");
+            oSB.Append("<td><b>Items</b></td><td><b>Size, KB</b></td>");
+            oSB.Append("</tr>");
             while (cacheEnum.MoveNext())
             {
                 var key = ToStringOrEmpty(cacheEnum.Key);
@@ -871,23 +876,31 @@ namespace Micajah.ErrorTrackerHelper2
                 {
                     try
                     {
+                        decimal cacheItemSize = 0;
                         Stream alternativeSerializationStreamSessionKey = BinaryWrite(key, altSerializationType);
                         if (TypeIsInAlternativeSerializationList(cacheEnum.Value.GetType(), altSerializationType))
                         {
                             Stream alternativeSerializationStream = BinaryWrite(cacheEnum.Value, altSerializationType);
-                            cacheTotal += Convert.ToDecimal(alternativeSerializationStream.Length + alternativeSerializationStreamSessionKey.Length);
+                            cacheItemSize = Convert.ToDecimal(alternativeSerializationStream.Length + alternativeSerializationStreamSessionKey.Length);
                         }
                         else
                         {
                             MemoryStream m;
                             m = BinarySerialize(cacheEnum.Value);
-                            cacheTotal += Convert.ToDecimal(m.Length + alternativeSerializationStreamSessionKey.Length);
+                            cacheItemSize = Convert.ToDecimal(m.Length + alternativeSerializationStreamSessionKey.Length);
                         }
+                        cacheTotal += cacheItemSize;
+                        oSB.Append("<tr>");
+                        oSB.Append("<td valign='top'><i><font size=-1>" + key + "</font></i></td>");
+                        oSB.Append("<td><font size=-1>" + cacheItemSize.ToString("N") + "</font></td>");
+                        oSB.Append("</tr>");
                     }
                     catch
                     { }
                 }
             }
+            AppendTableFooter(oSB);
+            cacheItemsInfo = oSB.ToString();
             return cacheTotal / Convert.ToDecimal(1000);
 		}
 

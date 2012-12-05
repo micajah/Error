@@ -117,6 +117,7 @@ namespace Micajah.ErrorTracker
 		private string _SmtpServer = "localhost";
         private int _ApplicationID = 0;
         private ErrorInfo ErrorInfo = null;
+        private bool _IncludeCacheItemsSizeInEmail = false;
 
 		#endregion
 
@@ -210,6 +211,18 @@ namespace Micajah.ErrorTracker
 				_MailAdmin = value;
 			}
 		}
+
+        public bool IncludeCacheItemsSizeInEmail
+        {
+            set
+            {
+                _IncludeCacheItemsSizeInEmail = value;
+            }
+            get
+            {
+                return _IncludeCacheItemsSizeInEmail;
+            }
+        }
 
         protected StringBuilder _BWDMessagebody = null;
 
@@ -338,7 +351,17 @@ namespace Micajah.ErrorTracker
                 //oSB.Append(ErrorInfo.Version);
                 if (ErrorInfo.CacheSize > 0)
                 {
-                    oSB.Append("<b>Cache Size:</b> " + ErrorInfo.CacheSize.ToString("N") + "KB<br><hr>");
+                    if (IncludeCacheItemsSizeInEmail)
+                    {
+                        oSB.Append("<font size=+1><b>Cache</b><br></font>");
+                        oSB.Append("<b>Total Size:</b> " + ErrorInfo.CacheSize.ToString("N") + "KB<br>");
+                        oSB.Append(ErrorInfo.CacheItemsInfo);
+                        oSB.Append("<hr>");
+                    }
+                    else
+                    {
+                        oSB.Append("<b>Cache Size:</b> " + ErrorInfo.CacheSize.ToString("N") + "KB<br><hr>");
+                    }
                 }
 
                 //Get the Mail Footer

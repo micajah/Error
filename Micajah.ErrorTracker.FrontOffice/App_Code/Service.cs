@@ -47,6 +47,10 @@ public class Service : System.Web.Services.WebService
 					oHelper.MailAdmin = Convert.ToString(drApplication["MailAdmin"]);
 					oHelper.FloodCount = 10;
 					oHelper.FloodMins = 5;
+                    if (!drApplication.IsNull("CacheItemsSize"))
+                    {
+                        oHelper.IncludeCacheItemsSizeInEmail = Convert.ToBoolean(drApplication["CacheItemsSize"]);
+                    }
 					oHelper.SendEmail(oErrorInfo, Micajah.ErrorTracker.EmailingHelper.MailRecepient.Users);
 				}
 

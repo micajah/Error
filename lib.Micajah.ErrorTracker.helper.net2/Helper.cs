@@ -66,7 +66,9 @@ namespace Micajah.ErrorTrackerHelper2
 				oErrorInfo.RequestCookies = WebException.GetRequestCookies().ToString();
 				oErrorInfo.ResponseCookies = WebException.GetResponseCookies().ToString();
 				oErrorInfo.ServerVariables = WebException.GetServerVariables().ToString();
-				oErrorInfo.CacheSize = WebException.GetCacheSize();
+                string cacheItemsInfo = "";
+				oErrorInfo.CacheSize = WebException.GetCacheSize(ref cacheItemsInfo);
+                oErrorInfo.CacheItemsInfo = cacheItemsInfo;
 
 				#endregion
 

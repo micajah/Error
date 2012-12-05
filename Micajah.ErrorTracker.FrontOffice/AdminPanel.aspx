@@ -38,8 +38,9 @@
                 <asp:BoundField DataField="SMTPServer" HeaderText="SMTP Server" SortExpression="SMTPServer" >
                     <ControlStyle Width="750px" />
                 </asp:BoundField>
+                <asp:CheckBoxField DataField="CacheItemsSize" HeaderText="Include Cache Details in E-mail" SortExpression="CacheItemsSize" />
             </Fields>
-            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" HorizontalAlign="Right" Width="130px" />
+            <FieldHeaderStyle BackColor="#DEE8F5" Font-Bold="True" HorizontalAlign="Right" Width="200px" />
             <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" Wrap="False" />
             <AlternatingRowStyle BackColor="White" />
             <EmptyDataRowStyle Wrap="False" />
@@ -50,8 +51,8 @@
             SelectCommand="SELECT * FROM Application"></asp:SqlDataSource>
         <asp:SqlDataSource ID="OneAppSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:mits_errortracker_ConnectionString %>"
             SelectCommand="SELECT * FROM Application WHERE Application.ApplicationID=@ApplicationID" 
-            InsertCommand="INSERT INTO Application (Name, Description, SendEmail, MailFrom, MailTo, MailBWD, MailAdmin, SMTPServer) VALUES (@Name, @Description, @SendEmail, @MailFrom, @MailTo, @MailBWD, @MailAdmin, @SMTPServer); SELECT @AppID = SCOPE_IDENTITY();" 
-            UpdateCommand="UPDATE Application SET Name = @Name, Description = @Description, SendEmail = @SendEmail, MailFrom = @MailFrom, MailTo = @MailTo, MailBWD = @MailBWD, MailAdmin = @MailAdmin, SMTPServer = @SMTPServer WHERE (ApplicationID = @ApplicationID)" 
+            InsertCommand="INSERT INTO Application (Name, Description, SendEmail, MailFrom, MailTo, MailBWD, MailAdmin, SMTPServer, CacheItemsSize) VALUES (@Name, @Description, @SendEmail, @MailFrom, @MailTo, @MailBWD, @MailAdmin, @SMTPServer, @CacheItemsSize); SELECT @AppID = SCOPE_IDENTITY();" 
+            UpdateCommand="UPDATE Application SET Name = @Name, Description = @Description, SendEmail = @SendEmail, MailFrom = @MailFrom, MailTo = @MailTo, MailBWD = @MailBWD, MailAdmin = @MailAdmin, SMTPServer = @SMTPServer, CacheItemsSize = @CacheItemsSize WHERE (ApplicationID = @ApplicationID)" 
             OnInserted="OneAppSqlDataSource_Inserted">
             <SelectParameters>
                 <asp:ControlParameter ControlID="ApllicationDropDownList" DefaultValue="1" Name="ApplicationID"
@@ -65,7 +66,8 @@
                 <asp:Parameter Name="MailTo" />
                 <asp:Parameter Name="MailBWD" />
                 <asp:Parameter Name="MailAdmin" />
-                <asp:Parameter Name="SMTPServer" />                
+                <asp:Parameter Name="SMTPServer" />
+                <asp:Parameter Name="CacheItemsSize" />
                 <asp:Parameter Name="ApplicationID" />
             </UpdateParameters>
             <InsertParameters>
@@ -77,6 +79,7 @@
                 <asp:Parameter Name="MailBWD" />
                 <asp:Parameter Name="MailAdmin" />
                 <asp:Parameter Name="SMTPServer" />
+                <asp:Parameter Name="CacheItemsSize" />
                 <asp:Parameter Name="AppID" Direction="Output" DefaultValue="0" Type="Int32" />
             </InsertParameters>
         </asp:SqlDataSource>
