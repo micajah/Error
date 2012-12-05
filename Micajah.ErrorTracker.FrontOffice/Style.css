@@ -142,10 +142,9 @@ form
 .ET_Content
 {
     margin: 0 auto;
-    padding-top: 20px;
-    padding-left: 7px;
+    padding: 20px 7px 50px 7px;
     display: inline-block;
-    padding-right: 7px;
+    float:left;
 }
 
 .ET_Wrapped {
