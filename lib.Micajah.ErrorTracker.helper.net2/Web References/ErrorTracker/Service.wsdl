@@ -40,6 +40,7 @@
           <s:element minOccurs="0" maxOccurs="1" name="RequestHeader" type="s:string" />
           <s:element minOccurs="0" maxOccurs="1" name="ServerVariables" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="CacheSize" type="s:decimal" />
+          <s:element minOccurs="0" maxOccurs="1" name="CacheItemsInfo" type="s:string" />
         </s:sequence>
       </s:complexType>
       <s:element name="AddErrorInfoErrorResponse">
