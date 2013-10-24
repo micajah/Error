@@ -42,7 +42,7 @@ namespace Micajah.ErrorTrackerHelper2
 
 		#region Private Members
 
-		private static bool DisableTelerikWebResourceException = Convert.ToInt32(ConfigurationSettings.AppSettings["DisableTelerikWebResourceException"]) > 0;
+		private static bool DisableTelerikWebResourceException = Convert.ToInt32(ConfigurationManager.AppSettings["DisableTelerikWebResourceException"]) > 0;
 		private string strErrorMessage = String.Empty;
 		private Exception oCurrentException;
 		private bool _DrillDownInCache = false;
@@ -51,7 +51,6 @@ namespace Micajah.ErrorTrackerHelper2
 		private int _TheFloodCount = 10;
 		private int _FloodMins = 30;
 		private string _ContentAfterException = String.Empty;
-		private string _SmtpServer = "localhost";
 		StringBuilder Sb = new StringBuilder();
 
 		#endregion
@@ -383,31 +382,38 @@ namespace Micajah.ErrorTrackerHelper2
 
 			foreach (Assembly a in assemblies)
 			{
-				if ((a.GetName().Name.IndexOf("System") < 0) &&
-										(a.GetName().Version.ToString() != "0.0.0.0") &&
-										(a.GetName().Name.IndexOf("mscorlib") < 0))
-				{
-					string Version = a.GetName().Version.ToString();
-					AssemblyInformationalVersionAttribute[] infoversion = (AssemblyInformationalVersionAttribute[])a.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
-					if (infoversion.Length == 1)
-					{
-						Version += (" (" + infoversion[0].InformationalVersion.ToString() + ")");
-					}
+                try
+                {
+                    string aName = a.GetName().Name;
+                    string aVersion = a.GetName().Version.ToString();
 
-					AppendTableRow(oSB, "<font size=-1>" + a.GetName().Name.ToString() + "</font>", "<font size=-1>" + Version + "</font>", false);
-					AppendTableRow(oSB, "<font size=-1>" + "Codebase" + "</font>", "<font size=-1>" + CreateAnchor(a.CodeBase.ToString()) + "</font>", false);
-					try
-					{
-						FileInfo F = new FileInfo(a.Location);
-						AppendTableRow(oSB, "<font size=-1>" + "Last Write Time" + "</font>", "<font size=-1>" + File.GetLastWriteTime(F.FullName).ToLongDateString() + " " + File.GetLastWriteTime(F.FullName).ToLongTimeString() + "</font>", false);
-					}
-					catch { int i = 0; }
-					finally
-					{
-						AppendTableRow(oSB, "&#160;", "&#160;", false);
-					}
-				}
-			}
+                    if ((aName.IndexOf("System") < 0) && (aVersion != "0.0.0.0") && (aName.IndexOf("mscorlib") < 0))
+                    {
+                        AssemblyInformationalVersionAttribute[] infoversion = (AssemblyInformationalVersionAttribute[])a.GetCustomAttributes(typeof(AssemblyInformationalVersionAttribute), false);
+                        if (infoversion.Length == 1)
+                        {
+                            aVersion += (" (" + infoversion[0].InformationalVersion.ToString() + ")");
+                        }
+
+                        AppendTableRow(oSB, "<font size=-1>" + aName + "</font>", "<font size=-1>" + aVersion + "</font>", false);
+
+                        string aCodeBase = a.CodeBase;
+                        string aFileName = a.Location;
+
+                        AppendTableRow(oSB, "<font size=-1>" + "Codebase" + "</font>", "<font size=-1>" + CreateAnchor(aCodeBase) + "</font>", false);
+                        FileInfo F = new FileInfo(a.Location);
+                        AppendTableRow(oSB, "<font size=-1>" + "Last Write Time" + "</font>", "<font size=-1>" + File.GetLastWriteTime(F.FullName).ToLongDateString() + " " + File.GetLastWriteTime(F.FullName).ToLongTimeString() + "</font>", false);
+                    }
+                }
+                catch (System.NotSupportedException)
+                {
+                    AppendTableRow(oSB, "<font size=-1>Dynamic Assembly</font>", "<font size=-1>Unknown CodeBase/Location</font>", false);
+                }
+                catch (Exception ex)
+                {
+                    AppendTableRow(oSB, "<font size=-1>Retrieving Assembly Information Error</font>", "<font size=-1>" + ex.ToString() + "</font>", false);
+                }
+            }
 
 			AppendTableFooter(oSB);
 			AppendHr(oSB);

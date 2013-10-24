@@ -1,9 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lib.Micajah.ErrorTracker.helper.net2", "lib.Micajah.ErrorTracker.helper.net2\lib.Micajah.ErrorTracker.helper.net2.csproj", "{52F26A5A-FF2C-4872-A10A-89B948055B5F}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web.test.net2", "web.test.net2", "{22C15360-15AF-48D5-A9BD-60C89514A460}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web.test.net2", "web.test.net2\", "{22C15360-15AF-48D5-A9BD-60C89514A460}"
 	ProjectSection(WebsiteProperties) = preProject
 		SccProjectName = "SAK"
 		SccAuxPath = "SAK"
@@ -29,7 +29,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web.test.net2", "web.test.n
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Micajah.ErrorTracker.FrontOffice", "Micajah.ErrorTracker.FrontOffice", "{2070EBC7-E593-4AF1-AD7F-BBE465E43BD5}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Micajah.ErrorTracker.FrontOffice", "Micajah.ErrorTracker.FrontOffice\", "{2070EBC7-E593-4AF1-AD7F-BBE465E43BD5}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/Micajah.ErrorTracker.FrontOffice"
@@ -50,25 +50,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "Micajah.ErrorTracker.FrontO
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://elektra-v03:8080/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = lib.Micajah.ErrorTracker.helper.net2\\lib.Micajah.ErrorTracker.helper.net2.csproj
-		SccProjectName1 = lib.Micajah.ErrorTracker.helper.net2
-		SccLocalPath1 = lib.Micajah.ErrorTracker.helper.net2
-		SccWebProject2 = true
-		SccProjectUniqueName2 = web.Micajah.ErrorTracker
-		SccLocalPath2 = .
-		SccProjectFilePathRelativizedFromConnection2 = web.Micajah.ErrorTracker\\
-		SccProjectEnlistmentChoice2 = 2
-		SccWebProject3 = true
-		SccProjectUniqueName3 = web.test.net2
-		SccLocalPath3 = .
-		SccProjectFilePathRelativizedFromConnection3 = web.test.net2\\
-		SccProjectEnlistmentChoice3 = 2
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|.NET = Debug|.NET
 		Debug|Any CPU = Debug|Any CPU
@@ -88,16 +69,16 @@ Global
 		{52F26A5A-FF2C-4872-A10A-89B948055B5F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{52F26A5A-FF2C-4872-A10A-89B948055B5F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{52F26A5A-FF2C-4872-A10A-89B948055B5F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|.NET.ActiveCfg = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|.NET.Build.0 = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|Any CPU.ActiveCfg = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|Mixed Platforms.ActiveCfg = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|Mixed Platforms.Build.0 = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|.NET.ActiveCfg = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|.NET.Build.0 = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|Any CPU.ActiveCfg = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|Mixed Platforms.ActiveCfg = Debug|.NET
-		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|Mixed Platforms.Build.0 = Debug|.NET
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|.NET.ActiveCfg = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|.NET.ActiveCfg = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{22C15360-15AF-48D5-A9BD-60C89514A460}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{2070EBC7-E593-4AF1-AD7F-BBE465E43BD5}.Debug|.NET.ActiveCfg = Debug|Any CPU
 		{2070EBC7-E593-4AF1-AD7F-BBE465E43BD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2070EBC7-E593-4AF1-AD7F-BBE465E43BD5}.Debug|Any CPU.Build.0 = Debug|Any CPU

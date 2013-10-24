@@ -19,9 +19,8 @@ namespace Micajah.ErrorTrackerHelper2
 				return null;
 
 			ErrorTracker.ErrorInfo oErrorInfo = null;
-			try
-			{
-				if (null == System.Web.HttpContext.Current)
+
+            if (null == System.Web.HttpContext.Current)
 					return null;
 				oErrorInfo = new ErrorTracker.ErrorInfo();
 
@@ -57,7 +56,6 @@ namespace Micajah.ErrorTrackerHelper2
 				oErrorInfo.URLReferrer = null != System.Web.HttpContext.Current.Request.UrlReferrer ? System.Web.HttpContext.Current.Request.UrlReferrer.AbsoluteUri : "None";
 				oErrorInfo.MachineName = System.Web.HttpContext.Current.Server.MachineName.ToString();
 				oErrorInfo.Version = WebException.GetVersionNumbers();
-				//oErrorInfo.StackTrace = WebException.GetTrace();
 				oErrorInfo.Form = WebException.GetForm();
 				oErrorInfo.Session = WebException.GetSession();
 				oErrorInfo.QueryString = System.Web.HttpContext.Current.Request.QueryString.ToString();
@@ -74,80 +72,36 @@ namespace Micajah.ErrorTrackerHelper2
 
 				string errorInfoText = SerializeErrorInfo(oErrorInfo);
 				oErrorInfo.QueryStringDescription += string.Format("<br/><hr/>Error Info length: {0}<hr/>", errorInfoText.Length);
-				//File.WriteAllText(System.Web.HttpContext.Current.Request.PhysicalApplicationPath + "Temp\\Errors\\" + Guid.NewGuid().ToString(), errorInfoText);
 
 				ErrorTracker.Service service = new Micajah.ErrorTrackerHelper2.ErrorTracker.Service();
-				//service.Url = "http://error.micajah.com/Service.asmx";
 				service.AddError(oErrorInfo);
-			}
-			catch (Exception inner_ex)
-			{
-				SendEmail(string.Format("Initial exception of type {8} in {0}:{3} {1} ({2}). {3}{3}Error Tracker internal exception in {4} of type {7}: {5} ({6}).",
-						System.Web.HttpContext.Current.Request.Url.LocalPath,
-						ex.Message,
-						ex.StackTrace,
-						"\n\n\n",
-						inner_ex.TargetSite,
-						inner_ex.Message,
-						inner_ex.StackTrace,
-						inner_ex.GetType().FullName,
-						ex.GetType().FullName
-						),
-					"Error Tracker exception",
-					"igor.vladyka@micajah.com"
-					);
-			}
-			return oErrorInfo;
+
+            return oErrorInfo;
 		}
 
-		private static void SendEmail(string body, string subject, string to)
-		{
-			MailMessage message = new MailMessage();
-			message.Body = body;
-			message.IsBodyHtml = false;
-			message.Subject = subject;
-			message.To.Add(to);
-			message.From = new MailAddress("igor.vladyka@micajah.com");
-			message.IsBodyHtml = true;
-
-			SmtpClient smtp = new SmtpClient("127.0.0.1");
-			smtp.Send(message);
-		}
 
 		private static string SerializeErrorInfo(ErrorInfo value)
 		{
 			string result = string.Empty;
-			try
-			{
-				XmlSerializer serealizer = new XmlSerializer(typeof(ErrorInfo));
-				MemoryStream stream = new MemoryStream();
-				serealizer.Serialize(stream, value);
-				byte[] buffer = stream.GetBuffer();
-				result = Encoding.Default.GetString(buffer, 0, (int)stream.Length);
-				stream.Close();
-				stream.Dispose();
-			}
-			catch (Exception)
-			{
-				return string.Empty;
-			}
-			return result;
+
+            XmlSerializer serealizer = new XmlSerializer(typeof(ErrorInfo));
+            MemoryStream stream = new MemoryStream();
+            serealizer.Serialize(stream, value);
+            byte[] buffer = stream.GetBuffer();
+            result = Encoding.Default.GetString(buffer, 0, (int)stream.Length);
+            stream.Close();
+            stream.Dispose();
+
+            return result;
 		}
 
 		public static void ReportApplicationException(Exception exception)
 		{
-			try
-			{
-				ErrorTracker.Service oService = new Micajah.ErrorTrackerHelper2.ErrorTracker.Service();
-				int applicationID = Convert.ToInt32(ConfigurationManager.AppSettings["ApplicationID"]);
-				ErrorInfo errorInfo = ConvertToErrorInfo(exception, applicationID);
+            ErrorTracker.Service oService = new Micajah.ErrorTrackerHelper2.ErrorTracker.Service();
+            int applicationID = Convert.ToInt32(ConfigurationManager.AppSettings["ApplicationID"]);
+            ErrorInfo errorInfo = ConvertToErrorInfo(exception, applicationID);
 
-				oService.AddError(errorInfo);
-			}
-			catch (Exception ex)
-			{
-				ex.ToString();
-			}
+            oService.AddError(errorInfo);
 		}
 
 		private static ErrorInfo ConvertToErrorInfo(Exception exception, int applicationID)
