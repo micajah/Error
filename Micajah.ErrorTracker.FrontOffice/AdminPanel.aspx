@@ -35,7 +35,7 @@
                 <asp:BoundField DataField="MailAdmin" HeaderText="MailAdmin" SortExpression="MailAdmin" >
                     <ControlStyle Width="750px" />
                 </asp:BoundField>
-                <asp:BoundField DataField="SMTPServer" HeaderText="SMTP Server" SortExpression="SMTPServer" >
+                <asp:BoundField DataField="SMTPServer" HeaderText="SMTP Server" SortExpression="SMTPServer" Visible="false">
                     <ControlStyle Width="750px" />
                 </asp:BoundField>
                 <asp:CheckBoxField DataField="CacheItemsSize" HeaderText="Include Cache Details in E-mail" SortExpression="CacheItemsSize" />

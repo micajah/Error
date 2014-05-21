@@ -390,26 +390,45 @@ namespace Micajah.ErrorTracker
 		public void SendEmail(ErrorInfo oErrorInfo, MailRecepient recepient)
 		{
 			_ApplicationID = oErrorInfo.ApplicationID;
-			System.Web.Mail.MailMessage myMail = new System.Web.Mail.MailMessage();
-			myMail.BodyFormat = System.Web.Mail.MailFormat.Html;
-			myMail.From = this._MailFrom;
-			if(recepient == MailRecepient.Users)
-			{
-				myMail.To = this._MailTo;
-				myMail.Subject = this.m_ApplicationName + " - " + oErrorInfo.ExceptionType;
-			}
-			else
-			{
-        myMail.To = this._MailBWD;
-        myMail.Subject = string.Format("Error Tracker: {0} at {1} : {2}", oErrorInfo.ExceptionType, oErrorInfo.ErrorFile, oErrorInfo.ErrorLineNumber);
-			}
-			myMail.Body = MessageBody.ToString();
-			if  (_SendMail == true)
-			{
-				//Set the Mail Server and Send the e-mail
-				System.Web.Mail.SmtpMail.SmtpServer = _SmtpServer;
-				System.Web.Mail.SmtpMail.Send(myMail);
-			}
+            System.Net.Mail.MailMessage myMail = new System.Net.Mail.MailMessage(); ;
+            myMail.SubjectEncoding = Encoding.UTF8;
+            myMail.BodyEncoding = Encoding.UTF8;
+            myMail.IsBodyHtml = true;
+            myMail.From = new MailAddress(this._MailFrom);
+            if (recepient == MailRecepient.Users)
+            {
+                if (!string.IsNullOrEmpty(this._MailTo))
+                {
+                    string[] _toArr = this._MailTo.Split(new char[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string _to in _toArr) myMail.To.Add(new MailAddress(_to.Trim()));
+                }
+                myMail.Subject = this.m_ApplicationName + " - " + oErrorInfo.ExceptionType;
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(this._MailBWD))
+                {
+                    string[] _toArr = this._MailBWD.Split(new char[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    foreach (string _to in _toArr) myMail.To.Add(new MailAddress(_to.Trim()));
+                }
+                myMail.Subject = string.Format("Error Tracker: {0} at {1} : {2}", oErrorInfo.ExceptionType, oErrorInfo.ErrorFile, oErrorInfo.ErrorLineNumber);
+            }
+            myMail.Body = MessageBody.ToString();
+            if (_SendMail == true)
+            {
+                //Set the Mail Server and Send the e-mail
+                try
+                {
+                    using (var smtp = new SmtpClient())
+                    {
+                        smtp.Send(myMail);
+                    }
+                }
+                catch(Exception ex)
+                {
+                    string s = ex.Message;
+                }
+            }
     }
 
         #region Private Helper Methods
