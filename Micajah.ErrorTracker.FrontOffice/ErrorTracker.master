@@ -36,6 +36,11 @@
                 </li>
                 <li><asp:HyperLink ID="hlAdminPanel" runat="server" Text="Admin Panel" NavigateUrl="AdminPanel.aspx"></asp:HyperLink></li>
             </ul>
+            <ul class="ET_LogOut">
+                <li>
+                    <asp:LinkButton ID="lbSignOut" runat="server" Text="Log Out" OnClick="lbSignOut_Click"></asp:LinkButton>
+                </li>
+            </ul>
         </div>
         <div class="ET_Main">
             <div class="ET_Content">

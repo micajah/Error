@@ -169,3 +169,51 @@ form
     padding: 4px;
     font-size: 16pt;
 }
+
+.ET_LogIn input
+{
+    padding: 2px;
+    font-size: 14px;
+}
+
+.ET_LogIn input[type="submit"]
+{
+    padding: 6px 18px;
+}
+
+.ET_LogIn tr
+{
+    background-color:White;
+    white-space:nowrap;
+}
+
+.ET_LogIn td
+{
+    padding: 8px;
+}
+
+.ET_LogIn .ET_LogInHeader
+{
+    color:White;
+    background-color:#507CD1;
+    font-weight:bold;
+    white-space:nowrap;
+}
+
+.ET_LogIn .ET_LogInTitle
+{
+    font-weight:bold;
+    text-align: right;
+    width: 90px;
+}
+
+.ET_LogIn .ET_LogInError
+{
+    color: red;
+    font-weight: bold;
+}
+
+.ET_LogOut
+{
+    float: right;
+}

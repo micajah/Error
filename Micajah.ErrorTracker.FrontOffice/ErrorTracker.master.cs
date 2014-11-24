@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Web.Security;
 
 public partial class ErrorTracker : System.Web.UI.MasterPage
 {
@@ -133,5 +134,11 @@ public partial class ErrorTracker : System.Web.UI.MasterPage
             }
             return 0;
         }
+    }
+
+    protected void lbSignOut_Click(object sender, EventArgs e)
+    {
+        FormsAuthentication.SignOut();
+        Response.Redirect("~/Login.aspx", true);
     }
 }
