@@ -48,7 +48,7 @@
         </asp:DetailsView>
             &nbsp;<asp:Label ID="WarnLabel" runat="server" EnableViewState="False" ForeColor="Red"></asp:Label>
         <asp:SqlDataSource ID="AllApplicationDataSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:mits_errortracker_ConnectionString %>"
-            SelectCommand="SELECT * FROM Application"></asp:SqlDataSource>
+            SelectCommand="SELECT * FROM Application Order By Name"></asp:SqlDataSource>
         <asp:SqlDataSource ID="OneAppSqlDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:mits_errortracker_ConnectionString %>"
             SelectCommand="SELECT * FROM Application WHERE Application.ApplicationID=@ApplicationID" 
             InsertCommand="INSERT INTO Application (Name, Description, SendEmail, MailFrom, MailTo, MailBWD, MailAdmin, SMTPServer, CacheItemsSize) VALUES (@Name, @Description, @SendEmail, @MailFrom, @MailTo, @MailBWD, @MailAdmin, @SMTPServer, @CacheItemsSize); SELECT @AppID = SCOPE_IDENTITY();" 

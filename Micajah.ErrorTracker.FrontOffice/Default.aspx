@@ -28,7 +28,7 @@
             <EditRowStyle BackColor="#2461BF" />
         </asp:GridView>
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:mits_errortracker_ConnectionString %>"
-            SelectCommand="SELECT A.ApplicationID, A.Name, MAX(E.Date) AS LastExceptionTime, COUNT(*) AS ErrorsCount FROM dbo.Error AS E INNER JOIN dbo.Application AS A ON A.ApplicationID = E.ApplicationID GROUP BY A.ApplicationID, A.Name" DataSourceMode="DataReader" DeleteCommand="DELETE Error&#13;&#10;WHERE ApplicationID =0">
+            SelectCommand="SELECT A.ApplicationID, A.Name, MAX(E.Date) AS LastExceptionTime, COUNT(*) AS ErrorsCount FROM dbo.Error AS E INNER JOIN dbo.Application AS A ON A.ApplicationID = E.ApplicationID GROUP BY A.ApplicationID, A.Name ORDER BY A.Name" DataSourceMode="DataReader" DeleteCommand="DELETE Error&#13;&#10;WHERE ApplicationID =0">
         </asp:SqlDataSource>
     
     </div>
