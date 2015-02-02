@@ -24,6 +24,10 @@
     [Session]                TEXT            NULL,
     [Cache]                  TEXT            NULL,
     [CacheSize]              DECIMAL (18, 2) NULL,
+    [Application]            TEXT            NULL,
+    [ServerVariables]        TEXT            NULL,
     CONSTRAINT [PK_Error] PRIMARY KEY CLUSTERED ([ApplicationID] ASC, [ErrorID] ASC)
 );
+
+
 

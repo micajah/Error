@@ -112,6 +112,8 @@ public class Service : System.Web.Services.WebService
 			row.Path = oErrorInfo.ErrorFile;
 		    row.Session = oErrorInfo.Session;
             row.CacheSize = oErrorInfo.CacheSize;
+            row.Application = oErrorInfo.ApplicationDescription;
+            row.ServerVariables = oErrorInfo.ServerVariables;
 			ds.Error.Rows.Add(row);
 
 			dsErrorTableAdapters.ErrorTableAdapter adapter = new dsErrorTableAdapters.ErrorTableAdapter();

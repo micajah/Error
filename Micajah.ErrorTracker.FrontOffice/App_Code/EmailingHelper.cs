@@ -49,6 +49,8 @@ namespace Micajah.ErrorTracker
                 oErrorInfo.Session = Convert.ToString(ErrorDBInfo[21]);
                 decimal cacheSize = 0;
                 decimal.TryParse(Convert.ToString(ErrorDBInfo[22]), out cacheSize);
+                oErrorInfo.ApplicationDescription = Convert.ToString(ErrorDBInfo[25]);
+                oErrorInfo.ServerVariables = Convert.ToString(ErrorDBInfo[26]);
                 if (cacheSize > 0)
                 {
                     oErrorInfo.CacheSize = cacheSize;
@@ -296,8 +298,20 @@ namespace Micajah.ErrorTracker
                 //Set up the Mail Header
                 GetMailHeader(oSB, true);
 
+                AppendTableHeader(oSB);
+                oSB.Append("<tr>");
+                oSB.Append("<td colspan=2><h3>Exceptions</h3></td>");
+                oSB.Append("</tr>");
+                AppendTableRow(oSB, "Type", ErrorInfo.Name, true);
+                AppendTableRow(oSB, "Message", ErrorInfo.Description, true, "color:red;");
+                AppendTableRow(oSB, "Error File", CreateAnchor(ErrorInfo.SourceFile), true);
+                AppendTableRow(oSB, "Error Line", ErrorInfo.ErrorLineNumber.ToString(), true);
+                AppendTableRow(oSB, "StackTrace", ErrorInfo.StackTrace, true);
+                AppendTableFooter(oSB);
+                oSB.Append("<hr />");
+
                 //Set up the Exceptions
-                oSB.Append(ErrorInfo.ExceptionsDescription);
+                //oSB.Append(ErrorInfo.ExceptionsDescription);
                 
                 //Get the Form
                 oSB.Append(ErrorInfo.Form);

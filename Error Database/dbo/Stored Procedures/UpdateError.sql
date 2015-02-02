@@ -24,10 +24,12 @@ CREATE PROCEDURE [dbo].[UpdateError]
 	@Original_ErrorID int,
 	@Session ntext,
 	@CacheSize decimal(18, 2),
+	@Application ntext,
+	@ServerVariables ntext,
 	@ErrorID int
 )
 AS
 	SET NOCOUNT OFF;
-UPDATE [dbo].[Error] SET [Date] = @Date, [ApplicationID] = @ApplicationID, [Browser] = @Browser, [Method] = @Method, [Name] = @Name, [Description] = @Description, [URL] = @URL, [URLReferrer] = @URLReferrer, [SourceFile] = @SourceFile, [ErrorLineNumber] = @ErrorLineNumber, [QueryString] = @QueryString, [MachineName] = @MachineName, [UserIPAddress] = @UserIPAddress, [ExceptionType] = @ExceptionType, [StackTrace] = @StackTrace, [QueryStringDescription] = @QueryStringDescription, [Version] = @Version, [RequestCookies] = @RequestCookies, [RequestHeader] = @RequestHeader, [Path] = @Path, [Session] = @Session, [CacheSize] = @CacheSize WHERE (([ErrorID] = @Original_ErrorID));
+UPDATE [dbo].[Error] SET [Date] = @Date, [ApplicationID] = @ApplicationID, [Browser] = @Browser, [Method] = @Method, [Name] = @Name, [Description] = @Description, [URL] = @URL, [URLReferrer] = @URLReferrer, [SourceFile] = @SourceFile, [ErrorLineNumber] = @ErrorLineNumber, [QueryString] = @QueryString, [MachineName] = @MachineName, [UserIPAddress] = @UserIPAddress, [ExceptionType] = @ExceptionType, [StackTrace] = @StackTrace, [QueryStringDescription] = @QueryStringDescription, [Version] = @Version, [RequestCookies] = @RequestCookies, [RequestHeader] = @RequestHeader, [Path] = @Path, [Session] = @Session, [CacheSize] = @CacheSize, [Application] = @Application, [ServerVariables] = @ServerVariables WHERE (([ErrorID] = @Original_ErrorID));
 	
-SELECT ErrorID, Date, ApplicationID, Browser, Method, Name, Description, URL, URLReferrer, SourceFile, ErrorLineNumber, QueryString, MachineName, UserIPAddress, ExceptionType, StackTrace, QueryStringDescription, Version, RequestCookies, RequestHeader, Path, [Session], [CacheSize] FROM dbo.Error WHERE (ErrorID = @ErrorID)
+SELECT ErrorID, Date, ApplicationID, Browser, Method, Name, Description, URL, URLReferrer, SourceFile, ErrorLineNumber, QueryString, MachineName, UserIPAddress, ExceptionType, StackTrace, QueryStringDescription, Version, RequestCookies, RequestHeader, Path, [Session], [CacheSize], [Application], [ServerVariables] FROM dbo.Error WHERE (ErrorID = @ErrorID)

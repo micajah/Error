@@ -74,7 +74,7 @@
                 </tr>
                 <tr>
                 <td>Request Cookies:</td>
-                <td><%# Eval("RequestCookies") %></td>
+                <td id="tdRequestCookies" runat="server"></td>
                 </tr>
                 <tr>
                 <td>Request Header:</td>
@@ -83,6 +83,14 @@
                 <tr>
                 <td>Session:</td>
                 <td><%# Eval("Session")%></td>
+                </tr>
+                <tr>
+                <td>Application:</td>
+                <td id="tdApplication" runat="server"></td>
+                </tr>
+                <tr>
+                <td>Server Variables:</td>
+                <td id="tdServerVariables" runat="server"></td>
                 </tr>
                 <tr>
                 <td>Cache Size:</td>

@@ -110,6 +110,9 @@ public partial class ErrorDetails : System.Web.UI.Page
                         td.InnerHtml = cacheSize.ToString() + "KB";
                     }
                 }
+                FormatData(e.Item, "Application", "tdApplication");
+                FormatData(e.Item, "ServerVariables", "tdServerVariables");
+                FormatData(e.Item, "RequestCookies", "tdRequestCookies");
             }
             SetLink(e.Item, "Version");
         }
@@ -124,6 +127,16 @@ public partial class ErrorDetails : System.Web.UI.Page
             {
                 td.InnerHtml = " &nbsp;&nbsp;<a href='Error" + name + "Details.aspx?AppID=" + AppID + "&ErrorID=" + ErrorID + "'>See Details</a>";
             }
+        }
+    }
+
+    private void FormatData(DataListItem item, string columnName, string tdID)
+    {
+        DataRowView _r = (DataRowView)item.DataItem;
+        HtmlTableCell td = (HtmlTableCell)item.FindControl(tdID);
+        if (_r != null && td != null && !_r.Row.IsNull(columnName))
+        {
+            td.InnerHtml = _r[columnName].ToString().Replace("<hr />", "");
         }
     }
 

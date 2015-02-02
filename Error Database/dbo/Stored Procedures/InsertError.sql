@@ -22,10 +22,21 @@ CREATE PROCEDURE [dbo].[InsertError]
 	@RequestHeader ntext,
 	@Path nvarchar(4000),
 	@Session ntext,
-	@CacheSize decimal(18, 2)
+	@CacheSize decimal(18, 2),
+	@Application ntext,
+	@ServerVariables ntext
 )
 AS
 	SET NOCOUNT OFF;
-INSERT INTO [dbo].[Error] ([Date], [ApplicationID], [Browser], [Method], [Name], [Description], [URL], [URLReferrer], [SourceFile], [ErrorLineNumber], [QueryString], [MachineName], [UserIPAddress], [ExceptionType], [StackTrace], [QueryStringDescription], [Version], [RequestCookies], [RequestHeader], [Path], [Session], [CacheSize]) VALUES (@Date, @ApplicationID, @Browser, @Method, @Name, @Description, @URL, @URLReferrer, @SourceFile, @ErrorLineNumber, @QueryString, @MachineName, @UserIPAddress, @ExceptionType, @StackTrace, @QueryStringDescription, @Version, @RequestCookies, @RequestHeader, @Path, @Session, @CacheSize);
+
+DELETE 
+	Error
+WHERE
+	Date < DATEADD(DAY,  -90, GETDATE()) 
 	
-SELECT ErrorID, Date, ApplicationID, Browser, Method, Name, Description, URL, URLReferrer, SourceFile, ErrorLineNumber, QueryString, MachineName, UserIPAddress, ExceptionType, StackTrace, QueryStringDescription, Version, RequestCookies, RequestHeader, Path, [Session], [CacheSize] FROM dbo.Error WHERE (ErrorID = SCOPE_IDENTITY())
+INSERT INTO [dbo].[Error] 
+	([Date], [ApplicationID], [Browser], [Method], [Name], [Description], [URL], [URLReferrer], [SourceFile], [ErrorLineNumber], [QueryString], [MachineName], [UserIPAddress], [ExceptionType], [StackTrace], [QueryStringDescription], [Version], [RequestCookies], [RequestHeader], [Path], [Session], [CacheSize], [Application], [ServerVariables]) 
+VALUES 
+	(@Date, @ApplicationID, @Browser, @Method, @Name, @Description, @URL, @URLReferrer, @SourceFile, @ErrorLineNumber, @QueryString, @MachineName, @UserIPAddress, @ExceptionType, @StackTrace, @QueryStringDescription, @Version, @RequestCookies, @RequestHeader, @Path, @Session, @CacheSize, @Application, @ServerVariables);
+	
+SELECT ErrorID, Date, ApplicationID, Browser, Method, Name, Description, URL, URLReferrer, SourceFile, ErrorLineNumber, QueryString, MachineName, UserIPAddress, ExceptionType, StackTrace, QueryStringDescription, Version, RequestCookies, RequestHeader, Path, [Session], [CacheSize], [Application], [ServerVariables] FROM dbo.Error WHERE (ErrorID = SCOPE_IDENTITY())
