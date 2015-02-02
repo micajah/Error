@@ -32,6 +32,8 @@ AS
 DELETE 
 	Error
 WHERE
+	ApplicationID = @ApplicationID
+	AND
 	Date < DATEADD(DAY,  -90, GETDATE()) 
 	
 INSERT INTO [dbo].[Error] 
