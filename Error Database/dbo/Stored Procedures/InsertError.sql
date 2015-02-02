@@ -29,12 +29,11 @@ CREATE PROCEDURE [dbo].[InsertError]
 AS
 	SET NOCOUNT OFF;
 
-DELETE 
+DELETE FROM 
 	Error
 WHERE
-	ApplicationID = @ApplicationID
-	AND
-	Date < DATEADD(DAY,  -90, GETDATE()) 
+	ErrorID IN 
+	(SELECT TOP 100 [ErrorID] FROM Error WHERE Date < DATEADD(DAY,  -90, GETDATE()) ORDER BY [Date] ASC)
 	
 INSERT INTO [dbo].[Error] 
 	([Date], [ApplicationID], [Browser], [Method], [Name], [Description], [URL], [URLReferrer], [SourceFile], [ErrorLineNumber], [QueryString], [MachineName], [UserIPAddress], [ExceptionType], [StackTrace], [QueryStringDescription], [Version], [RequestCookies], [RequestHeader], [Path], [Session], [CacheSize], [Application], [ServerVariables]) 
